@@ -2,6 +2,9 @@ import "reflect-metadata";
 import { DataSource } from "typeorm";
 import * as dotenv from "dotenv";
 import { User } from "./entities/User.entity";
+import { Auction } from "./entities/Auction.entity";
+import { Favorite } from "./entities/Favorite.entity";
+import { Obtained } from "./entities/Obtained.entity";
 
 
 dotenv.config();
@@ -15,7 +18,7 @@ if (!MONGO_URI) {
 export const AppDataSource = new DataSource({
   type: "mongodb",
   url: MONGO_URI,
-  entities: [User],
+  entities: [User, Auction, Favorite, Obtained],
   useUnifiedTopology: true,
   synchronize: true,
 });
