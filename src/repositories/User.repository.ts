@@ -23,7 +23,6 @@ export class UserRepository {
         return this.repository.findOne({ where: { _id: objectId } });
     }
 
-
     async getAll() {
         return this.repository.find();
     }
