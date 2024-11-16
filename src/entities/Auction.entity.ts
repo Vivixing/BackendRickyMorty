@@ -1,4 +1,4 @@
-import { Entity, ObjectIdColumn, Column, ObjectId, ManyToOne } from "typeorm";
+import { Entity, ObjectIdColumn, Column, ObjectId, ManyToOne, CreateDateColumn } from "typeorm";
 import { User } from "./User.entity";
 
 @Entity({ name: "Auction" })
@@ -21,9 +21,9 @@ export class Auction {
     @Column({ nullable: false })
     completed: boolean;
 
-    @Column({ nullable: false })
+    @CreateDateColumn()
     startDate: Date;
 
-    @Column({ nullable: false })
+    @Column({ nullable: true })
     endDate: Date;
 }
