@@ -1,12 +1,16 @@
-import { Entity, ObjectIdColumn, Column, ObjectId } from "typeorm";
+import { Entity, ObjectIdColumn, Column, ObjectId, ManyToOne } from "typeorm";
+import { User } from "./User.entity";
 
 @Entity({ name: "Auction" })
 export class Auction {
     @ObjectIdColumn()
     _id: ObjectId;
 
-    @Column({ nullable: false })
-    userId: string;
+    @ManyToOne(() => User, (user) => user.auctionsCreated, { nullable: false })
+    auctionCreator: User;
+
+    @ManyToOne(() => User, (user) => user.participatedAuctions, { nullable: true })
+    acquirer: User;
 
     @Column({ nullable: false })
     character1Id: number;

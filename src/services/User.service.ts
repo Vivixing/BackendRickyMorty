@@ -52,9 +52,11 @@ export class UserService {
             if (!userExistente) {
                 throw new Error("Ningun usuario corresponde a ese ID");
             }
-
             await this.validations(user);
-            return this.UserRepository.save(user);
+            userExistente.username = user.username;
+            userExistente.password = user.password;
+            userExistente.email = user.email;
+            return this.UserRepository.save(userExistente);
         } catch (error) {
             throw error;
         }

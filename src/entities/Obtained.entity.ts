@@ -1,4 +1,5 @@
-import { Entity, ObjectIdColumn, Column, ObjectId } from "typeorm";
+import { Entity, ObjectIdColumn, Column, ObjectId, ManyToOne } from "typeorm";
+import { User } from "./User.entity";
 
 export enum Method {
     CAPTURED = "captured",
@@ -9,9 +10,6 @@ export enum Method {
 export class Obtained {
     @ObjectIdColumn()
     _id: ObjectId;
-
-    @Column({ nullable: false })
-    userId: string;
 
     @Column({ nullable: false, unique: true })
     characterId: number;
@@ -24,4 +22,7 @@ export class Obtained {
 
     @Column({ type: "enum", enum: Method, nullable: false })
     method: Method;
+
+    @ManyToOne(() => User, (user) => user.obtained, { nullable: false })
+    user: User;
 }
