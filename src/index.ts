@@ -7,6 +7,7 @@ import * as swaggerUi from 'swagger-ui-express';
 import * as swaggerSpec from './swagger'
 import { userRouter } from "./routes/User.routes";
 import { auctionRouter } from "./routes/Auction.route";
+import { obtainedRouter } from "./routes/Obtained.route";
 
 const cors = require('cors');
 dotenv.config();
@@ -18,7 +19,7 @@ const wsInstance = require('express-ws')(app);
 app.use(cors());
 app.use(express.json());
 app.use(errorHandler);
-app.use("/api", userRouter, auctionRouter);
+app.use("/api", userRouter, auctionRouter, obtainedRouter);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 AppDataSource.initialize()
   .then(async () => {

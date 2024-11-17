@@ -1,27 +1,23 @@
-import { Entity, ObjectIdColumn, Column, ObjectId, ManyToOne } from "typeorm";
+import { Entity, ObjectIdColumn, Column, ObjectId, ManyToOne, CreateDateColumn } from "typeorm";
 import { User } from "./User.entity";
 
-export enum Method {
-    CAPTURED = "captured",
-    EXCHANGED = "exchanged"
-}
 
 @Entity({ name: "Obtained" })
 export class Obtained {
     @ObjectIdColumn()
     _id: ObjectId;
 
-    @Column({ nullable: false, unique: true })
+    @Column({ nullable: false })
     characterId: number;
 
-    @Column({ nullable: false })
+    @CreateDateColumn()
     date: Date;
 
     @Column({ nullable: true })
     location: string;
 
-    @Column({ type: "enum", enum: Method, nullable: false })
-    method: Method;
+    @Column({ nullable: false })
+    method: string;
 
     @ManyToOne(() => User, (user) => user.obtained, { nullable: false })
     user: User;
