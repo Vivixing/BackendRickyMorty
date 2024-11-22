@@ -21,6 +21,18 @@ export class FavoriteService {
         return this.favoriteRepository.findById(idFavorite);
     }
 
+    async findByCharacterIdAndUser(characterId: number, user: User) {
+        return this.favoriteRepository.findByCharacterIdAndUser(characterId, user);
+    }
+
+    async deleteByCharacterIdAndUser(characterId: number, user: User) {
+        const favorite = await this.favoriteRepository.findByCharacterIdAndUser(characterId, user);
+        if (!favorite) {
+            throw new Error("El personaje no existe en favoritos");
+        }
+        return this.favoriteRepository.delete(favorite._id);
+    }
+
     async saveFavorite(favorite: Favorite) {
         try {
             const user = await this.userRepository.findByIdUser(favorite.user._id);

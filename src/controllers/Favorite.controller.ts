@@ -92,5 +92,33 @@ export class FavoriteController{
         }
     };
 
+    public findByCharacterIdAndUser = async (req: Request, res: Response) => {
+        const { characterId, user } = req.params;
+        const objectId = new ObjectId(user);
+        try {
+            const user: User = await this.userService.findByIdUser(objectId);
+            const favorite: Favorite = await this.favoriteService.findByCharacterIdAndUser(parseInt(characterId), user);
+            return res.status(200).json({
+                favorite,
+            });
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    };
+
+    public deleteByCharacterIdAndUser = async (req: Request, res: Response) => {
+        const { characterId, user } = req.params;
+        const objectId = new ObjectId(user);
+        try {
+            const user: User = await this.userService.findByIdUser(objectId);
+            await this.favoriteService.deleteByCharacterIdAndUser(parseInt(characterId), user);
+            return res.status(200).json({
+                message: "Favorite deleted successfully",
+            });
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    }
+
     
 }

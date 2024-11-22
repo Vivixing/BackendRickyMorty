@@ -30,4 +30,9 @@ router.delete(
     favoriteController.deleteFavorite
 );
 
+router.delete(
+    "/Favorite/:characterId/:user",
+    favoriteController.deleteByCharacterIdAndUser
+);
+
 export { router as favoriteRouter };
