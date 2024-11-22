@@ -69,4 +69,15 @@ export class UserService {
         }
         return this.UserRepository.delete(idUser)
     }
+
+    async login(username: string, password: string) {
+        const user = await this.UserRepository.findByUsername(username);
+        if (!user) {
+            throw new Error("Usuario no encontrado")
+        }
+        if (user.password !== password) {
+            throw new Error("Contraseña incorrecta")
+        }
+        return user;
+    }
 }

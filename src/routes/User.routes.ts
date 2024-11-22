@@ -34,4 +34,9 @@ Router.delete(
     userController.deleteUser
 )
 
+Router.post(
+    "/User/login",
+    userController.login
+)
+
 export { Router as userRouter };

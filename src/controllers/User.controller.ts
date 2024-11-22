@@ -89,4 +89,14 @@ export class UserController {
         }
     }
 
+    public login = async (req: Request, res: Response) => {
+        const { username, password } = req.body;
+        try {
+            const result = await this.UserService.login(username, password);
+            return res.status(200).json(result);
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    }
+
 }
