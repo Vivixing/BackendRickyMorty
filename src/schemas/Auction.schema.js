@@ -6,14 +6,21 @@ const AuctionCreationSchema = Joi.object({
     auctionCreator: Joi.object({
         _id: Joi.string().required(),
     }).required(),
+    acquirer: Joi.object({
+        _id: Joi.string().required(),
+    }).optional(),
 });
 
 const AuctionUpdateSchema = Joi.object({
     _id: Joi.string().required(),
     character1Id: Joi.number(),
     character2Id: Joi.number(),
-    auctionCreator: Joi.string(),
-    acquirer: Joi.string(),
+    auctionCreator: Joi.object({
+        _id: Joi.string().required(),
+    }),
+    acquirer: Joi.object({
+        _id: Joi.string().required(),
+    }),
     completed: Joi.boolean(),
     endDate: Joi.date(),
 });

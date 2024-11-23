@@ -128,4 +128,15 @@ export class AuctionController {
             res.status(400).json({ error: error.message });
         }
     }
+
+    public exchangeCharacters = async (req: Request, res: Response) => {
+        const body = req.body;
+        const data = AuctionUpdateSchema.validate(body)
+        try {
+            const result: Auction = await this.AuctionService.exchangeCharacters(body);
+            return res.status(200).json(result);
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    }
 }

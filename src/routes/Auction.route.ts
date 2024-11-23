@@ -44,6 +44,11 @@ router.delete(
     auctionController.deleteAuction
 );
 
+router.post(
+    "/Auction/exchange",
+    auctionController.exchangeCharacters
+);
+
 export { router as auctionRouter };
 
 
