@@ -4,7 +4,7 @@ const ObtainedCreationSchema = Joi.object({
     characterId: Joi.number().required(),
     location : Joi.object({
         lat: Joi.number().required(),
-        lon: Joi.number().required(),
+        lng: Joi.number().required(),
     }).optional(),
     method : Joi.string().required().valid('Captured', 'Exchanged').insensitive(),
     user: Joi.object({
