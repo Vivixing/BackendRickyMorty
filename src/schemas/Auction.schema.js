@@ -9,6 +9,7 @@ const AuctionCreationSchema = Joi.object({
     acquirer: Joi.object({
         _id: Joi.string().required(),
     }).optional(),
+    creatorId: Joi.string().required(),
 });
 
 const AuctionUpdateSchema = Joi.object({

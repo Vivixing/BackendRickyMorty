@@ -120,7 +120,7 @@ export class AuctionService {
             if (auctionExistente.completed) {
                 throw new Error("The auction is already completed");
             }
-            const auctionOwner = await this.UserRepository.findByIdUser(auction.auctionCreator._id);
+            const auctionOwner = await this.UserRepository.findByIdUser(auction.creatorId);
             auctionExistente.auctionCreator = auctionOwner
 
             const acquirer = await this.UserRepository.findByIdUser(auction.acquirer._id);

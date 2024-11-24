@@ -24,6 +24,9 @@ export class Auction {
     @CreateDateColumn()
     startDate: Date;
 
+    @Column({ nullable: false })
+    creatorId: string;
+
     @Column({ nullable: true })
     endDate: Date;
 }

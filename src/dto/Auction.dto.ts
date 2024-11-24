@@ -10,5 +10,6 @@ export class AuctionResponse{
     completed: boolean;
     startDate: Date;
     endDate: Date;
+    creatorId: string;
 
 }
