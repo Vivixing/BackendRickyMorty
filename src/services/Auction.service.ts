@@ -36,20 +36,47 @@ export class AuctionService {
         return this.AuctionRepository.findByCompleted(completed)
     }
 
-    async saveAuction(auction: Auction) {
+    async saveAuction(auction: Auction): Promise<Auction> {
         try {
-            console.log(auction);
+            // Verificar que el objeto auction sea válido
+            if (!auction || !auction.auctionCreator || !auction.auctionCreator._id) {
+                throw new Error("Invalid auction object or auction creator information is missing.");
+            }
+    
+            console.log("Saving auction:", auction);
+    
+            // Buscar al creador de la subasta
             const user = await this.UserRepository.findByIdUser(auction.auctionCreator._id);
-            const acquirer = await this.UserRepository.findByIdUser(auction.acquirer._id);
+            if (!user) {
+                throw new Error("The auction creator doesn't exist.");
+            }
+    
+            // Asignar datos del creador y marcar la subasta como no completada
             auction.auctionCreator = user;
-            auction.acquirer = acquirer;
             auction.completed = false;
+    
+            // Verificar si hay un adquirente válido
+            if (auction.acquirer && auction.acquirer._id) {
+                const acquirer = await this.UserRepository.findByIdUser(auction.acquirer._id);
+                if (!acquirer) {
+                    console.warn("The acquirer doesn't exist, proceeding without it.");
+                } else {
+                    auction.acquirer = acquirer;
+                }
+            }
+    
+            // Realizar validaciones específicas antes de guardar
             await this.validations(auction);
-            return this.AuctionRepository.save(auction);
+    
+            // Guardar la subasta en el repositorio
+            return await this.AuctionRepository.save(auction);
         } catch (error) {
-            throw error;
+            // Lanzar un error específico con información adicional si es necesario
+            console.error("Error saving auction:", error.message);
+            throw new Error(`Failed to save auction: ${error.message}`);
         }
     }
+    
 
     async validations(auction: Auction) {
         if (auction.character1Id === auction.character2Id) {
