@@ -43,4 +43,13 @@ export class ObtainedRepository {
     async delete(obtainedId: ObjectId) {
         return this.repository.delete(obtainedId);
     }
+
+    async findByUserAndMethod(user: User, method: string) {
+        return this.repository.find({
+            where: {
+                user,
+                method
+            },
+        });
+    }
 }

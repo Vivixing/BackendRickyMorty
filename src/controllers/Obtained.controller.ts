@@ -61,6 +61,20 @@ export class ObtainedController {
         }
     };
 
+    public findByUserAndMethod = async (req: Request, res: Response) => {
+        const { user, method } = req.params;
+        var objectId = new ObjectId(user);
+        try {
+            const owner = await this.userService.findByIdUser(objectId);
+            const obtained: Obtained[] = await this.obtainedService.findByUserAndMethod(owner, method);
+            return res.status(200).json({
+                obtained,
+            });
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    };
+
     public saveObtained = async (req: Request, res: Response) => {
         const body = req.body;
         const data = ObtainedCreationSchema.validate(body)
@@ -99,4 +113,5 @@ export class ObtainedController {
             res.status(400).json({ error: error.message });
         }
     }
+
 }

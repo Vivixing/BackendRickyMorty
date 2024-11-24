@@ -45,4 +45,9 @@ router.delete(
     obtainedController.deleteObtained
 );
 
+router.get(
+    '/Obtained/user/:user/method/:method',
+    obtainedController.findByUserAndMethod
+);
+
 export { router as obtainedRouter };

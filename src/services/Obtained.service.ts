@@ -67,5 +67,9 @@ export class ObtainedService {
         }
     }
 
+    async findByUserAndMethod(user: User, method: string) {
+        return this.obtainedRepository.findByUserAndMethod(user, method);
+    }
+
 
 }
