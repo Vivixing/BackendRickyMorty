@@ -5,7 +5,7 @@ export class ObtainedResponse{
     _id: ObjectId;
     characterId: number;
     date: Date;
-    location: { lat: 0, long: 0 };
+    location: { lat: 0, lng: 0 };
     method: string;
     user: User;
 }

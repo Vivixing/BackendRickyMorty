@@ -14,7 +14,7 @@ export class Obtained {
     date: Date;
 
     @Column({ nullable: true })
-    location: { lat: 0, long: 0 };
+    location: { lat: 0, lng: 0 };
 
     @Column({ nullable: false })
     method: string;

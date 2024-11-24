@@ -44,8 +44,8 @@ export class ObtainedService {
 
     async validations(characterId:number, user: User) {
         const obtainedExistente = await this.obtainedRepository.findByCharacterIdAndUser(characterId, user);
-        if (obtainedExistente) {
-            throw new Error("El usuario ya tiene ese personaje");
+        if (obtainedExistente && obtainedExistente.method === "Exchanged") {
+            throw new Error("The character has already been exchanged");
         }
     }
 

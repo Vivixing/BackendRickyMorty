@@ -140,9 +140,9 @@ export class AuctionService {
             }
             character1.characterId = auction.character2Id;
             character1.method = "Exchanged";
-            character1.location = { lat: 0, long: 0 };
+            character1.location = { lat: 0, lng: 0 };
             character1.date = new Date();
-            character2.location = { lat: 0, long: 0 };
+            character2.location = { lat: 0, lng: 0 };
             character2.characterId = auction.character1Id;
             character2.method = "Exchanged";
             character2.date = new Date();
