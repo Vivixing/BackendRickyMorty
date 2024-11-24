@@ -102,6 +102,7 @@ export class AuctionService {
         if (auctionProgress) {
             throw new Error("You already have an auction in progress")
         }
+        if(auction.acquirer){
         const acquirer = await this.UserRepository.findByIdUser(auction.acquirer._id);
         if(acquirer){
             const acquirerObtained1 = await this.ObtainedRepository.findByCharacterIdAndUser(auction.character1Id, acquirer);
@@ -113,6 +114,7 @@ export class AuctionService {
                 throw new Error("The acquirer doesn't have that character")
             }
         }
+    }
         return true;
     }
 
