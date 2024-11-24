@@ -55,16 +55,6 @@ export class AuctionService {
             auction.auctionCreator = user;
             auction.completed = false;
     
-            // Verificar si hay un adquirente válido
-            if (auction.acquirer && auction.acquirer._id) {
-                const acquirer = await this.UserRepository.findByIdUser(auction.acquirer._id);
-                if (!acquirer) {
-                    console.warn("The acquirer doesn't exist, proceeding without it.");
-                } else {
-                    auction.acquirer = acquirer;
-                }
-            }
-    
             // Realizar validaciones específicas antes de guardar
             await this.validations(auction);
     
@@ -114,6 +104,9 @@ export class AuctionService {
                 throw new Error("The acquirer doesn't have that character")
             }
         }
+        else{
+            throw new Error("The acquirer doesn't exist")
+        }
     }
         return true;
     }
@@ -162,19 +155,29 @@ export class AuctionService {
             if (!auctionExistente) {
                 throw new Error("Ninguna subasta corresponde a ese ID");
             }
-            await this.validations(auction);
-            const auctionOwner = await this.UserRepository.findByIdUser(auction.auctionCreator._id);
-            auctionExistente.auctionCreator = auctionOwner
-
-            const acquirer = await this.UserRepository.findByIdUser(auction.acquirer._id);
-            auctionExistente.acquirer = acquirer;
+            if(auctionExistente.completed){
+                throw new Error("The auction is already completed")
+            }
+            // Según los elementos ingresados, se actualizan los campos si es necesario
+            if (auction.character1Id) {
+                auctionExistente.character1Id = auction.character1Id;
+            }
+            if (auction.character2Id) {
+                auctionExistente.character2Id = auction.character2Id;
+            }
+            if (auction.acquirer) {
+                auctionExistente.acquirer = auction.acquirer;
+            }
+            if (auction.endDate) {
+                auctionExistente.endDate = auction.endDate;
+            }
+            if (auction.completed) {
+                auctionExistente.completed = auction.completed;
+            }
+            if (auction.auctionCreator) {
+                auctionExistente.auctionCreator = auction.auctionCreator;
+            }
             
-            console.log(auctionOwner, acquirer);
-            auctionExistente.character1Id = auction.character1Id;
-            auctionExistente.character2Id = auction.character2Id;
-            auctionExistente.completed = auction.completed;
-            auctionExistente.startDate = auction.startDate;
-            auctionExistente.endDate = auction.endDate;
             return this.AuctionRepository.save(auctionExistente);
         } catch (error) {
             throw error;
