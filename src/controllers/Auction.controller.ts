@@ -56,7 +56,7 @@ export class AuctionController {
             var completedBool = false;
         }
         try {
-            const auction: AuctionResponse = await this.AuctionService.findByCompleted(completedBool);
+            const auction: Auction[] = await this.AuctionService.findByCompleted(completedBool);
             return res.status(200).json({
                 auction,
             });

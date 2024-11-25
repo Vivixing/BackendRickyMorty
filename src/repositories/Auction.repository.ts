@@ -28,7 +28,7 @@ export class AuctionRepository {
     }
 
     async findByCompleted(completed: boolean) {
-        return this.repository.findOne({
+        return this.repository.find({
             where: {
                 completed,
             },
