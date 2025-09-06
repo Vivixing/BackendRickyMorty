@@ -19,7 +19,6 @@ export const AppDataSource = new DataSource({
   type: "mongodb",
   url: MONGO_URI,
   entities: [User, Auction, Favorite, Obtained],
-  useUnifiedTopology: true,
   synchronize: true,
   migrations: ["src/migrations/*.ts"],
   migrationsRun: true,
